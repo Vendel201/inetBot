@@ -776,6 +776,7 @@ namespace InetBot.Modules
                         break;
                     case "hardwaretest":
                     case "hwt":
+                    case "hwtest":
                         await HandleHwtCommand();
                         break;
                     case "dump":
@@ -820,15 +821,18 @@ namespace InetBot.Modules
                         await HandleMovableCommand();
                         break;
                     case "missing":
+                    case "missingtitles":
                         await HandleMissingTitlesCommand();
                         break;
                     case "titlefixer":
                         await HandleTitleFixerCommand();
                         break;
                     case "ctrcheck":
+                    case "windows":
                         await HandleCTRCheckCommand();
                         break;
                     case "things":
+                    case "ttd":
                         await HandleThingsCommand();
                         break;
                     case "mid0":
@@ -849,10 +853,12 @@ namespace InetBot.Modules
                         await HandleUninstallCommand();
                         break;
                     case "ftp":
+                    case "ftpd":
                         await HandleFTPCommand();
                         break;
                     case "essentials":
                     case "idk":
+                    case "essentialdumper":
                         await HandleEssentialsCommand();
                         break;
                     case "backup":
@@ -872,9 +878,11 @@ namespace InetBot.Modules
                         await HandleFaketikCommand();
                         break;
                     case "atob":
+                    case "a9lhtob9s":
                         await HandleA9LHCommand();
                         break;
                     case "ltob":
+                    case "lumatob9s":
                         await HandleLumatoB9SCommand();
                         break;
                     case "b9s":
@@ -3584,8 +3592,9 @@ namespace InetBot.Modules
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About Luma")
-                .WithDescription("https://github.com/LumaTeam/Luma3DS/releases/latest\n" +
-                "https://github.com/LumaTeam/Luma3DS/releases/tag/v7.0.5");
+                .WithDescription("Latest: https://github.com/LumaTeam/Luma3DS/releases/latest\n" +
+                "v7.1: https://github.com/LumaTeam/Luma3DS/releases/tag/v7.1\n" +
+                "v7.0.5: https://github.com/LumaTeam/Luma3DS/releases/tag/v7.0.5");
 
             await RespondToInfoCommand(replyBuilder);
         }
