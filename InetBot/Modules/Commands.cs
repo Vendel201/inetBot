@@ -895,6 +895,9 @@ namespace InetBot.Modules
                     case "3dsbank":
                         await Handle3DSBankCommand();
                         break;
+                    case "bmbt":
+                        await HandleBareMetalButtonTesterCommand();
+                        break;
                     case "nh":
                     case "nintendohomebrew":
                     case "homebrew":
@@ -1107,6 +1110,8 @@ namespace InetBot.Modules
                 "Gives you information about guides. Optionally points you to guide sections.\n\n" +
                 "`?links`\n" +
                 "Gives you a list of useful links.\n\n" +
+                "`?model`\n" +
+                "Gives you a list of pros and cons for each 3DS model.\n\n" +
                 "`?lfg pokemon/mk7/smash/luigi/triforce/animal crossing`\n" +
                 "Ping the role for each game with a 24 hour cooldown.\n\n" +
                 "`/match mk7/leaderboard`\n" +
@@ -1279,14 +1284,15 @@ namespace InetBot.Modules
                     color = Color.Parse("#14b7fc");
                     break;
                 case 0909:
-                    title = "Rule 0909: Japanese Goku guy";
+                    title = "Rule 0909: 宇宙機長 ジース";
                     description = "AKA.:\n" +
                         "Goku mod guy, Goku guy, Smiley, Jiece, Space, Space Captain, Japanese guy, Chinese Goku guy, Chinese character guy, Chinese goku letters guy, " +
                         "Japanese Goku guy, Japanese symbols guy, Goku, Chinese Goku, Chinese anime guy, Scj, chinese goku mod anime guy, Japanese person, Spacecaptainfurry, Goku Japanese person, " +
                         "Furry goku man, Soace Captain Jeice, Lord Jeice, Space Furry Jeice, japanese/british man, yuG ukoG esenapaJ, closet furry mod, chinese letters mod anime guy, Goku man, furryku, Chef, " +
-                        "Juice, Furry boy, Japanese boy, Soace, Furry japanese goku mod, Chinese letter guy, Charger boy, Space Cat Jeice, jeissolini, furjeice, ginyu's red fella, 宇宙機長 ジース, " +
+                        "Juice, Furry boy, Japanese boy, Soace, Furry japanese goku mod, Chinese letter guy, Charger boy, Space Cat Jeice, jeissolini, furjeice, ginyu's red fella, Japanese goku guy, " +
                         "Chinese Goku Mod Anime Furry Guy, Furry man, British Boy, Furry british chinese goku, Goku pfp, Mec Goku chinois Modérateur d'Anime Furry, Chinese Goku Furry Mod Guy, Arabic Goku, " +
-                        "Jeicd, Keice, japanese furry, British Goku, Mr Furry";
+                        "Jeicd, Keice, japanese furry, British Goku, Mr Furry, Jeicey boy, British juice, Juice box, Sensei, Funny hair furry anime man, Cheese, Space Captain Cheese, " +
+                        "The mod with the goku pfp and the jaonese name, Arabic Goku, chinese goku mod anime guy god, Chinese gok san, that dbz mod, Jeicenet, ケモナー検討者";
                     color = Color.Orange;
                     break;
                 case 8008:
@@ -3786,6 +3792,14 @@ namespace InetBot.Modules
             await RespondToInfoCommand(replyBuilder);
         }
 
+        private async Task HandleBareMetalButtonTesterCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About BMBT3DS")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Bmbt3DS");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
         private async Task HandleNHCommand()
         {
             var msg = _message;
@@ -3821,6 +3835,8 @@ namespace InetBot.Modules
                 "`?backup`\n" +
                 "https://3ds.hacks.guide/godmode9-usage.html#creating-a-nand-backup\n" +
                 "https://3ds.hacks.guide/godmode9-usage.html#restoring-a-nand-backup\n\n" +
+                "`?bmbt`\n" +
+                "https://wiki.hacks.guide/wiki/3DS:Bmbt3DS\n\n" +
                 "`?bsu`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Black_screen_unbrick\n\n" +
                 "`?corrupt ?fixer ?fcg`\n" +
