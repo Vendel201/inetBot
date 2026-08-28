@@ -922,6 +922,9 @@ namespace InetBot.Modules
                     case "idiot":
                         await HandleIdiotCommand();
                         break;
+                    case "fish":
+                        await HandleFishCommand();
+                        break;
                     case "lfg":
                         string game = "";
 
@@ -3948,6 +3951,15 @@ namespace InetBot.Modules
             else await RespondToTextCommand(replyBuilder);
         }
 
+        private async Task HandleFishCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithImageUrl($"https://vendell.online/img/windowsme.jpg");
+
+            if (isSlashCommand) await RespondToSlashCommand(replyBuilder);
+            else await RespondToTextCommand(replyBuilder);
+        }
+
         private async Task HandleLFGCommand(string game)
         {
             if (_user == null) return;
@@ -4036,7 +4048,6 @@ namespace InetBot.Modules
             else
             {
                 var timestamp = lastPingMessage[gameIndex].Timestamp;
-
 
                 if (DateTime.Compare(DateTime.Now.AddDays(-1), timestamp.DateTime) > 0)
                 {
