@@ -3161,7 +3161,7 @@ namespace InetBot.Modules
                 .WithTitle("About Pretendo")
                 .WithDescription("To install Pretendo:\n\n" +
                 "1) Search \"nimbus\" in Universal Updater and install it.\n" +
-                "2) Turn on `enable game patching` and `enable loading external firms and modules` in the Luma configuration menu (select + power) if you haven't already.\n"
+                "2) Turn on `enable game patching` and `enable loading external firms and modules` in the Luma configuration menu (select + power).\n"
                 "3) Launch Nimbus and select Pretendo. Your console will restart.");
             
             await RespondToInfoCommand(replyBuilder);
