@@ -36,8 +36,8 @@ namespace InetBot.Modules
         string valueID = "";
 
         string[] modCommands = ["ban", "unban", "kick", "unkick", "mute", "unmute", "nohelp", "yeshelp", "warn", "unwarn", "getpunishments", "accept", "deny", "role"];
-        string[] commands = ["ban", "unban", "kick", "unkick", "mute", "unmute", "nohelp", "yeshelp", "warn", "unwarn", "getpunishments", "deny", "accept", "help", "rule", "rules", "say", "ping", "format", "formatbutgood", "formst", "formatting", "sd", "sdcard", "piracy", "piracybutgood", "tnips", "panel", "panels", "ips", "tn", "citra", "emulator", "emulation", "guide", "3ds", "n3ds", "cat", "dog", "otter", "bird", "birb", "balance", "no", "leaderboard", "lfg", "match"];
-        string[] infoCommands = ["format", "formatbutgood", "formst", "formatting", "sd", "sdcard", "piracy", "piracybutgood", "tnips", "panel", "panels", "ips", "tn", "citra", "emulator", "emulation", "3ds", "n3ds"];
+        string[] commands = ["ban", "unban", "kick", "unkick", "mute", "unmute", "nohelp", "yeshelp", "warn", "unwarn", "getpunishments", "deny", "accept", "help", "rule", "rules", "say", "ping", "format", "formatbutgood", "formst", "formatting", "sd", "sdcard", "piracy", "piracybutgood", "tnips", "panel", "panels", "ips", "tn", "pretendo", "citra", "emulator", "emulation", "guide", "3ds", "n3ds", "cat", "dog", "otter", "bird", "birb", "balance", "no", "leaderboard", "lfg", "match"];
+        string[] infoCommands = ["format", "formatbutgood", "formst", "formatting", "sd", "sdcard", "piracy", "piracybutgood", "tnips", "panel", "panels", "ips", "tn", "pretendo", "citra", "emulator", "emulation", "3ds", "n3ds"];
 
         public SocketTextChannel _modChannel;
 
@@ -729,6 +729,9 @@ namespace InetBot.Modules
                     case "tn":
                         await HandleScreenCommand();
                         break;
+                    case "pretendo":
+                        await HandlePretendoCommand();
+                        break;
                     case "citra":
                     case "emulator":
                     case "emulation":
@@ -897,6 +900,14 @@ namespace InetBot.Modules
                         break;
                     case "bmbt":
                         await HandleBareMetalButtonTesterCommand();
+                        break;
+                    case "pretendosupport":
+                        await HandlePretendoSupportCommand();
+                        break;
+                    case "3deyellower":
+                    case "yellow":
+                    case "bananascreen":
+                        await Handle3DeyellowerCommand();
                         break;
                     case "nh":
                     case "nintendohomebrew":
@@ -1102,7 +1113,7 @@ namespace InetBot.Modules
                 "Here is an overview of the commands with examples!\n\n" +
                 "`?otter/dog/cat/bird`\n" +
                 "Gets a random image of your favourite critter.\n\n" +
-                "`?format/piracy/panel/citra/n3ds/n2dsxl`\n" +
+                "`?format/piracy/panel/pretendo/citra/n3ds/n2dsxl`\n" +
                 "Provides information about various topics.\n\n" +
                 "`?sd <transfer>`\n" +
                 "Gives you information about SD cards and optionally how to transfer your data to a new card.\n\n" +
@@ -3144,6 +3155,18 @@ namespace InetBot.Modules
 
         }
 
+        private async Task HandlePretendoCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About Pretendo")
+                .WithDescription("To install Pretendo:\n\n" +
+                "1) Search \"nimbus\" in Universal Updater and install it.\n" +
+                "2) Turn on `enable game patching` and `enable loading external firms and modules` in the Luma configuration menu (select + power) if you haven't already.\n"
+                "3) Launch Nimbus and select Pretendo. Your console will restart.");
+            
+            await RespondToInfoCommand(replyBuilder);
+        }
+
         private async Task HandleCitraCommand()
         {
             var replyBuilder = new EmbedBuilder()
@@ -3800,6 +3823,22 @@ namespace InetBot.Modules
             await RespondToInfoCommand(replyBuilder);
         }
 
+        private async Task HandlePretendoSupportCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About Pretendo Supported Games")
+                .WithDescription("https://games.pretendo.zip/");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task Handle3DeyellowerCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About 3Deyellower")
+                .WithDescription("https://github.com/ManiacOfGitHub/3Deyellower");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
         private async Task HandleNHCommand()
         {
             var msg = _message;
@@ -3826,9 +3865,11 @@ namespace InetBot.Modules
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("List of helpful links")
                 .WithDescription("Here is a list of useful links:\n\n" +
+                "`?3deyellower ?yellow`\n" +
+                "https://github.com/ManiacOfGitHub/3Deyellower\n\n" +
                 "`?3dsbank`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:3DSBank\n\n" +
-                "`?atob`\n" +
+                "`?a9lhtob9s ?atob`\n" +
                 "https://3ds.hacks.guide/a9lh-to-b9s.html\n\n" +
                 "`?b9s`\n" +
                 "https://3ds.hacks.guide/updating-b9s.html\n\n" +
@@ -3849,22 +3890,22 @@ namespace InetBot.Modules
                 "https://wiki.hacks.guide/wiki/3DS:DS_mode_unbrick\n\n" +
                 "`?dump ?dumping`\n" +
                 "https://3ds.hacks.guide/dumping-titles-and-game-cartridges.html\n\n" +
-                "`?essential`\n" +
+                "`?essential ?essentialdumper`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:3ds_essential_dumper\n\n" +
                 "`?faketik`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Faketik\n\n" +
                 "`?finalising ?finalise`\n" +
                 "https://3ds.hacks.guide/finalizing-setup.html\n\n" +
-                "`?ftp`\n" +
+                "`?ftp ?ftpd`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:FTP\n\n" +
-                "`?hardwaretest ?hwt`\n" +
+                "`?hardwaretest ?hwt ?hwtest`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Hardware_test\n\n" +
                 "`?integrity ?checksd ?fakesd`\n" +
                 "https://wiki.hacks.guide/wiki/Checking_SD_card_integrity\n\n" +
                 "`?locale ?extendedlocale`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Setting_game_locales\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Setting_game_locales/Extended_locale_setting\n\n" +
-                "`?ltob`\n" +
+                "`?lumatob9s ?ltob`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Luma3DS_to_boot9strap\n\n" +
                 "`?luma`\n" +
                 "https://github.com/LumaTeam/Luma3DS/releases/latest\n" +
@@ -3873,7 +3914,7 @@ namespace InetBot.Modules
                 "https://wiki.hacks.guide/wiki/3DS:Troubleshooting/multiple_ID0\n\n" +
                 "`?mid1`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Troubleshooting/multiple_ID1\n\n" +
-                "`?missing`\n" +
+                "`?missing ?missingtitles`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Missing_Titles\n\n" +
                 "`?mkey`\n" +
                 "https://mkey.nintendohomebrew.com/\n\n" +
@@ -3883,13 +3924,15 @@ namespace InetBot.Modules
                 "https://3ds.hacks.guide/godmode9-usage.html#removing-an-nnid-without-formatting-your-console\n\n" +
                 "`?ntrboot`\n" +
                 "https://3ds.hacks.guide/ntrboot.html\n\n" +
+                "`?pretendosupport`\n" +
+                "https://games.pretendo.zip/\n\n" +
                 "`?restore ?update`\n" +
                 "https://3ds.hacks.guide/restoring-updating-cfw.html\n\n" +
                 "`?soap ?cleaninty`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Cleaninty\n\n" +
                 "`?stealth ?stealthluma`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Alternate_Exploits/Installing_boot9strap_(Stealth_Luma3DS)\n\n" +
-                "`?things`\n" +
+                "`?things ?ttd`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Things_to_do\n\n" +
                 "`?titlefixer`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Gm9-title-fixer\n\n" +
