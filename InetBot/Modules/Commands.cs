@@ -817,7 +817,13 @@ namespace InetBot.Modules
                         await HandleModelsCommand();
                         break;
                     case "ctrtransfer":
+                    case "ctrt":
                         await HandleCtrTransferCommand();
+                        break;
+                    case "manualctrtransfer":
+                    case "manualctrt":
+                    case "mctrt":
+                        await HandleManualCTRTransferCommand();
                         break;
                     case "movable":
                     case "mm":
@@ -3643,7 +3649,15 @@ namespace InetBot.Modules
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About doing a CTR transfer")
-                .WithDescription("https://3ds.hacks.guide/ctrtransfer.html\nhttps://wiki.hacks.guide/wiki/3DS:CTRTransfer/Manual");
+                .WithDescription("https://3ds.hacks.guide/ctrtransfer.html");
+            await RespondToInfoCommand(replyBuilder);
+        }
+        
+        private async Task HandleManualCTRTransferCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About doing a manual CTR transfer")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:CTRTransfer/Manual");
             await RespondToInfoCommand(replyBuilder);
         }
 
@@ -3910,6 +3924,8 @@ namespace InetBot.Modules
                 "`?luma`\n" +
                 "https://github.com/LumaTeam/Luma3DS/releases/latest\n" +
                 "https://github.com/LumaTeam/Luma3DS/releases/tag/v7.0.5\n\n" +
+                "`?manualctrtransfer ?manualctrt ?mctrt`\n" +
+                "https://wiki.hacks.guide/wiki/3DS:CTRTransfer/Manual\n\n" +
                 "`?mid0`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Troubleshooting/multiple_ID0\n\n" +
                 "`?mid1`\n" +
