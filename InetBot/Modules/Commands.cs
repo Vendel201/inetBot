@@ -3890,7 +3890,7 @@ namespace InetBot.Modules
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About Rebuilding Title Database")
-                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Rebuild_Title_Database")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Rebuild_Title_Database");
             await RespondToInfoCommand(replyBuilder);
         }
 
@@ -3898,7 +3898,7 @@ namespace InetBot.Modules
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About Uninstalling CFW")
-                .WithDescription("https://3ds.hacks.guide/uninstall-cfw.html")
+                .WithDescription("https://3ds.hacks.guide/uninstall-cfw.html");
             await RespondToInfoCommand(replyBuilder);
         }
 
