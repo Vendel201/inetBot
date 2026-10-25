@@ -4,6 +4,7 @@ using Discord.WebSocket;
 using InetBot.Data;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
@@ -291,13 +292,28 @@ namespace InetBot.Modules
                 .WithImageUrl("https://cdn.discordapp.com/attachments/575033344002359298/1244756751249576006/green.jpg")
                 .WithFooter("To reply, send '=<message>'! To close, send '=close <reason>'");
 
-            var roleList = string.Join(", ", sourceGuild.GetUser(sourceMessage.Author.Id).Roles.Select(x => x.Mention));
+            string roleList = "thanks discord";
+            long joinedAt = 0;
+
+            //var users = sourceGuild.GetUsersAsync().FirstAsync(item => item.First(x => x.Id == sourceMessage.Author.Id) == null).Result;
+            //Console.WriteLine(users);
+
+            try
+            {
+                roleList = string.Join(", ", sourceGuild.GetUser(sourceMessage.Author.Id).Roles.Select(x => x.Mention));
+                joinedAt = sourceGuild.GetUser(sourceMessage.Author.Id).JoinedAt.Value.ToUnixTimeSeconds();
+            }
+            catch (Exception)
+            {
+                //throw;
+            }
+            
 
             EmbedBuilder openEmbedBuilder = new EmbedBuilder()
                 .WithAuthor($"{sourceMessage.Author.Username} [{sourceMessage.Author.Id}]", sourceMessage.Author.GetAvatarUrl() ?? sourceMessage.Author.GetDefaultAvatarUrl())
                 .WithTitle($"New Modmail!")
                 .WithDescription($"A new ModMail with ID {ticket.ticketID} has been opened with reason `{mailMessage.content}`!")
-                .AddField($":nerd: Author", $":cake: <t:{sourceMessage.Author.CreatedAt.ToUnixTimeSeconds()}:f>\n:trumpet: <t:{sourceGuild.GetUser(sourceMessage.Author.Id).JoinedAt.Value.ToUnixTimeSeconds()}:f>\n:crossed_swords: {roleList}")
+                .AddField($":nerd: Author", $":cake: <t:{sourceMessage.Author.CreatedAt.ToUnixTimeSeconds()}:f>\n:trumpet: <t:{joinedAt}:f>\n:crossed_swords: {roleList}")
                 .WithColor(Color.Green)
                 .WithImageUrl("https://cdn.discordapp.com/attachments/575033344002359298/1244756751249576006/green.jpg")
                 .WithFooter("To reply, send '=<message>'! To close, send '=close <reason>'");

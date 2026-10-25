@@ -1,9 +1,11 @@
-﻿using Discord.WebSocket;
+﻿using Discord;
+using Discord.WebSocket;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -16,7 +18,7 @@ namespace InetBot.Modules
         HttpClient webClient = new HttpClient();
         Commands commands = new Commands();
 
-        int index = 1;
+        ulong authorID = 0;
 
         public void ScanImage(SocketMessage message, SocketGuild guild, DiscordSocketClient client)
         {
@@ -45,17 +47,16 @@ namespace InetBot.Modules
                     foundText = page.GetText();
                 }
 
-                if (foundText.ToLower().Contains("i am pleased to announce the launch of my own cryptocurrency"))
+                Console.WriteLine(foundText);
+
+                if (foundText.ToLower().Contains("my own cryptocurrency casino"))
                 {
-                    Console.WriteLine($"Deleting message No. {index} from @{message.Author.Username} [{message.Author.Id}] for being a Mr. Beast scam.");
+                    Console.WriteLine($"Deleting message from @{message.Author.Username} [{message.Author.Id}] for being a Mr. Beast scam.");
                     message.DeleteAsync();
 
-                    index++;
-                    if (index == 4)
-                    {
-                        Console.WriteLine($"Ding ding ding! Banning @{message.Author.Username} [{message.Author.Id}] for being a Mr. Beast scam.");
-                        ScammerBanner(message.Author, guild, client);
-                    }
+                    ScammerBanner(message.Author, guild, client);
+
+                    authorID = message.Author.Id;
                 }
             }
             catch (Exception)
@@ -80,9 +81,21 @@ namespace InetBot.Modules
             commands._modChannel = guild.GetTextChannel(commands.modChannelID);
             commands._message = null;
 
-            await commands.HandleBanCommand(guild.GetUser(user.Id), "Compromised account. (Auto)", guild);
-            index = 1;
-        }
+            if (user.Id != authorID)
+            {
+                Console.WriteLine($"Ding ding ding! Banning @{user.Username} [{user.Id}] for being a Mr. Beast scam.");
+                await commands.HandleBanCommand(guild.GetUser(user.Id), "Compromised account. (Auto)", guild);
 
+
+                EmbedBuilder bannedBuilder = new EmbedBuilder()
+                    .WithAuthor($"{commands._user.Username} [{commands._user.Id}]", commands._user.GetAvatarUrl() ?? commands._user.GetDefaultAvatarUrl())
+                    .WithTitle("Scammer banned!")
+                    .WithDescription($"Banned @{user.Username} `[{user.Id}]` for posting a Mr. Beast scam.")
+                    .WithColor(Color.Red);
+
+                await guild.GetTextChannel(248509081789136896).SendMessageAsync(embed:bannedBuilder.Build());
+
+            }
+        }
     }
 }

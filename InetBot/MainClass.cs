@@ -572,7 +572,7 @@ namespace InetBot
                 //await textCommands.HandleCommand(message, _guild, _client);
                 await commands.HandleCommand(message, _guild, _client);
             }
-            else if (message.Attachments.Count == 4)
+            else if (message.Attachments.Count >= 2)
             {
                 scamDetector.ScanImage(message, _guild, _client);
             }

@@ -2,14 +2,16 @@
 using Discord.Net;
 using Discord.WebSocket;
 using InetBot.Data;
+using InetBot.Data.Bootrom;
+using InetBot.Data.Pretendo;
 using Newtonsoft.Json;
+using System.Diagnostics.Metrics;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
-using static InetBot.Data.User;
 using static InetBot.Data.PregeneratedRegex;
-using InetBot.Data.Bootrom;
+using static InetBot.Data.User;
 
 
 namespace InetBot.Modules
@@ -785,6 +787,12 @@ namespace InetBot.Modules
 
                         await HandleGuideCommand(section);
                         break;
+                    case "transfer":
+                        await HandleGuideCommand("transfer");
+                        break;
+                    case "regionchange":
+                        await HandleGuideCommand("regionchange");
+                        break;
                     case "model":
                         string model = "";
                         if (message.Content.Length > 7) model = message.Content.Remove(0, 7);
@@ -995,7 +1003,6 @@ namespace InetBot.Modules
                         break;
                     case "lfg":
                         string game = "";
-
                         try
                         {
                             game = message.Content.ToLower().Split(" ")[1];
@@ -1012,6 +1019,9 @@ namespace InetBot.Modules
                         break;
                     case "about":
                         await HandleAboutCommand();
+                        break;
+                    case "pretendostatus":
+                        await HandlePretendoStatusCommand();
                         break;
                     default:
                         await HandleUnknownCommand(cmd);
@@ -3493,7 +3503,7 @@ namespace InetBot.Modules
                     case "regionchange":
                         title = "Changing your consoles region";
                         description = "If you have **Luma3DS** installed you can play out-of-region games (ex. **U**S games on **E**uropean consoles) without having to region change.\n" +
-                            "But especially for **J**apanese consoles, where you can't set the UI language to english, region changing is needed.\n" +
+                            "But especially for **J**a**P**anese, **K**o**R**ean, **T**ai**W**anese and **C**hi**N**ese consoles where you can't set the UI language to english, region changing is needed.\n" +
                             "Region changing is an involved process- if you already have CFW, please follow [the guide](https://3ds.hacks.guide/region-changing)\n" +
                             "Otherwise you need to [hack your console first](https://3ds.hacks.guide)";
                         color = Color.LightOrange;
@@ -4484,8 +4494,29 @@ namespace InetBot.Modules
                 $":tools: Built on **{buildTime}**\n" +
                 $":clock1: Process uptime: **{uptime}**\n" +
                 $":zap: Server current power usage: **{PowerUsage.GetPowerUsage().StatusSNS.ENERGY.Power}W**\n" +
-                $":page_facing_up: Lines of code: **~6500**")
+                $":page_facing_up: Lines of code: **~7500**")
                 .WithFooter("Thank you for using! <3");
+
+            if (isSlashCommand) await RespondToSlashCommand(replyBuilder);
+            else await RespondToTextCommand(replyBuilder);
+        }
+
+        private async Task HandlePretendoStatusCommand()
+        {
+            PretendoStatus pretendoStatus = PretendoStatus.GetStatus();
+
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle($"Pretendo Status")
+                .WithDescription($"Status for the main Pretendo services!\n" +
+                $"Check https://status.pretendo.network for the full list.\n\n" +
+                $"Pretendo Website: {getStatusEmoji(pretendoStatus.websiteHealthy)}\n" +
+                $"Community Forum: {getStatusEmoji(pretendoStatus.forumHealthy)}\n" +
+                $"Account Service: {getStatusEmoji(pretendoStatus.accountHealthy)}\n\n" +
+                $"Archiverse: {getStatusEmoji(pretendoStatus.archiverseHealthy)}\n" +
+                $"BOSS: {getStatusEmoji(pretendoStatus.BOSSHealthy)}\n" +
+                $"Juxtaposition: {getStatusEmoji(pretendoStatus.juxtapositionHealthy)}")
+                .WithColor(Color.Purple)
+                .WithFooter("Thank you Pretendo!");
 
             if (isSlashCommand) await RespondToSlashCommand(replyBuilder);
             else await RespondToTextCommand(replyBuilder);
@@ -4647,6 +4678,20 @@ namespace InetBot.Modules
 
             return strings;
         }
+
+        public static string getStatusEmoji(bool status)
+        {
+            switch (status)
+            {
+                case true:
+                    return ":green_circle: **Online!**";
+                case false:
+                    return ":red_circle: **Offline...**";
+                default:
+                    break;
+            }
+        }
+
 
         public async Task GetModChannel(SocketGuild guild)
         {
