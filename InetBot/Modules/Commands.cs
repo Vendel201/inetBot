@@ -864,6 +864,7 @@ namespace InetBot.Modules
                         await HandleManualCTRTransferCommand();
                         break;
                     case "movable":
+                    case "movablemoveover":
                     case "mm":
                         await HandleMovableCommand();
                         break;
@@ -890,23 +891,27 @@ namespace InetBot.Modules
                         break;
                     case "integrity":
                     case "checksd":
-                    case "fakesd":
                         await HandleIntegrityCommand();
+                        break;
+                    case "validrive":
+                    case "fakesd":
+                        await HandleValidriveCommand();
                         break;
                     case "ntrboot":
                         await HandleNTRBootCommand();
                         break;
-                    case "uninstall":
-                        await HandleUninstallCommand();
+                    case "uninstallapps":
+                    case "uninstallapp":
+                        await HandleUninstallAppsCommand();
                         break;
                     case "ftp":
                     case "ftpd":
                         await HandleFTPCommand();
                         break;
-                    case "essentials":
-                    case "idk":
+                    case "essential":
                     case "essentialdumper":
-                        await HandleEssentialsCommand();
+                    case "idk":
+                        await HandleEssentialCommand();
                         break;
                     case "backup":
                         await HandleBackupCommand();
@@ -959,6 +964,33 @@ namespace InetBot.Modules
                         break;
                     case "uninstallcfw":
                         await HandleUninstallCFWCommand();
+                        break;
+                    case "gatekeeper":
+                    case "unsigned":
+                    case "unsignedfile":
+                    case "unsignedapp":
+                        await HandleGatekeeperCommand();
+                        break;
+                    case "wireless":
+                    case "streaming":
+                    case "stream":
+                    case "wirelessstreaming":
+                    case "wirelessstream":
+                        await HandleWirelessStreamingCommand();
+                        break;
+                    case "jumpstart":
+                    case "jump":
+                        await HandleJumpStartCommand();
+                        break;
+                    case "customkeyboard":
+                    case "customkey":
+                    case "keyboard":
+                        await HandleCustomKeyboardCommand();
+                        break;
+                    case "keyboardunbrick":
+                    case "keyunbrick":
+                    case "swkbdunbrick":
+                        await HandleKeyboardUnbrickCommand();
                         break;
                     case "nh":
                     case "nintendohomebrew":
@@ -1545,7 +1577,7 @@ namespace InetBot.Modules
                         "Juice, Furry boy, Japanese boy, Soace, Furry japanese goku mod, Chinese letter guy, Charger boy, Space Cat Jeice, jeissolini, furjeice, ginyu's red fella, Japanese goku guy, " +
                         "Chinese Goku Mod Anime Furry Guy, Furry man, British Boy, Furry british chinese goku, Goku pfp, Mec Goku chinois Modérateur d'Anime Furry, Chinese Goku Furry Mod Guy, Arabic Goku, " +
                         "Jeicd, Keice, japanese furry, British Goku, Mr Furry, Jeicey boy, British juice, Juice box, Sensei, Funny hair furry anime man, Cheese, Space Captain Cheese, " +
-                        "The mod with the goku pfp and the jaonese name, Arabic Goku, chinese goku mod anime guy god, Chinese gok san, that dbz mod, Jeicenet, ケモナー検討者";
+                        "The mod with the goku pfp and the jaonese name, Arabic Goku, chinese goku mod anime guy god, Chinese gok san, that dbz mod, Jeicenet, ケモナー検討者, Chief";
                     color = Color.Orange;
                     break;
                 case 8008:
@@ -3998,7 +4030,15 @@ namespace InetBot.Modules
             await RespondToInfoCommand(replyBuilder);
         }
 
-        private async Task HandleUninstallCommand()
+        private async Task HandleValidriveCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About Validrive")
+                .WithDescription("https://www.grc.com/validrive.htm");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task HandleUninstallAppsCommand()
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About uninstalling software")
@@ -4014,10 +4054,10 @@ namespace InetBot.Modules
             await RespondToInfoCommand(replyBuilder);
         }
 
-        private async Task HandleEssentialsCommand()
+        private async Task HandleEssentialCommand()
         {
             var replyBuilder = new EmbedBuilder()
-                .WithTitle("About dumping essentials")
+                .WithTitle("About dumping essential files")
                 .WithDescription("https://wiki.hacks.guide/wiki/3DS:3ds_essential_dumper");
             await RespondToInfoCommand(replyBuilder);
         }
@@ -4042,7 +4082,8 @@ namespace InetBot.Modules
         {
             var replyBuilder = new EmbedBuilder()
                 .WithTitle("About setting locales")
-                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Setting_game_locales\nhttps://wiki.hacks.guide/wiki/3DS:Setting_game_locales/Extended_locale_setting");
+                .WithDescription("Setting locales: https://wiki.hacks.guide/wiki/3DS:Setting_game_locales\n"
+                "Extended locale setting: https://wiki.hacks.guide/wiki/3DS:Setting_game_locales/Extended_locale_setting");
             await RespondToInfoCommand(replyBuilder);
         }
 
@@ -4134,6 +4175,45 @@ namespace InetBot.Modules
             await RespondToInfoCommand(replyBuilder);
         }
 
+        private async Task HandleGatekeeperCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("Opening Unsigned Apps on MacOS")
+                .WithDescription("https://wiki.hacks.guide/wiki/Gatekeeper");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task HandleWirelessStreamingCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About Wireless Streaming")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Wireless_streaming");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task HandleJumpStartCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About jumpstarting batteries")
+                .WithDescription("https://hardware.hacks.guide/wiki/Guides/Batteries");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task HandleCustomKeyboardCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("About installing a custom keyboard")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Custom_Keyboard");
+            await RespondToInfoCommand(replyBuilder);
+        }
+
+        private async Task HandleKeyboardUnbrickCommand()
+        {
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle("Keyboard Unbrick")
+                .WithDescription("https://wiki.hacks.guide/wiki/3DS:Keyboard_Unbrick");
+            await RespondToInfoCommand(replyBuilder);
+        }
         private async Task HandleNHCommand()
         {
             var msg = _message;
@@ -4156,12 +4236,21 @@ namespace InetBot.Modules
 
         private async Task HandleDSICommand()
         {
-            var replyBuilder = new EmbedBuilder()
-                .WithTitle("DSi Mode Hacking")
-                .WithDescription("https://discord.gg/fCzqcWteC4");
-            await RespondToInfoCommand(replyBuilder);
-        }
+            var msg = _message;
 
+            string message = "DSI Mode Hacking's server:\n" +
+            "https://discord.gg/fCzqcWteC4";
+
+            if (_userMessage.Reference != null)
+            {
+                await _message.DeleteAsync();
+                await _userMessage.ReferencedMessage.ReplyAsync(message);
+            }
+            else
+            {
+                await _userMessage.ReplyAsync(message);
+            } 
+        }
 
         private async Task HandleLinksCommand()
         {
@@ -4189,6 +4278,8 @@ namespace InetBot.Modules
                 "https://wiki.hacks.guide/wiki/3DS:Ctrcheck\n\n" +
                 "`?ctrtransfer`\n" +
                 "https://3ds.hacks.guide/ctrtransfer.html\n\n" +
+                "`?customkeyboard ?customkey`\n" +
+                "https://wiki.hacks.guide/wiki/3DS:Custom_Keyboard\n\n" +
                 "`?dsmu`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:DS_mode_unbrick\n\n" +
                 "`?dump ?dumping`\n" +
@@ -4201,10 +4292,16 @@ namespace InetBot.Modules
                 "https://3ds.hacks.guide/finalizing-setup.html\n\n" +
                 "`?ftp ?ftpd`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:FTP\n\n" +
+                "`?gatekeeper ?unsignedfile ?unsignedapp`\n" +
+                "https://wiki.hacks.guide/wiki/Gatekeeper\n\n" +
                 "`?hardwaretest ?hwt ?hwtest`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Hardware_test\n\n" +
-                "`?integrity ?checksd ?fakesd`\n" +
+                "`?integrity ?checksd`\n" +
                 "https://wiki.hacks.guide/wiki/Checking_SD_card_integrity\n\n" +
+                "`?jumpstart`\n" +
+                "https://hardware.hacks.guide/wiki/Guides/Batteries\n\n" +
+                "`?keyboardunbrick ?keyunbrick`\n" +
+                "https://wiki.hacks.guide/wiki/3DS:Keyboard_Unbrick\n\n" +
                 "`?locale ?extendedlocale`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Setting_game_locales\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Setting_game_locales/Extended_locale_setting\n\n" +
@@ -4212,6 +4309,7 @@ namespace InetBot.Modules
                 "https://wiki.hacks.guide/wiki/3DS:Luma3DS_to_boot9strap\n\n" +
                 "`?luma`\n" +
                 "https://github.com/LumaTeam/Luma3DS/releases/latest\n" +
+                "https://github.com/LumaTeam/Luma3DS/releases/tag/v7.1\n" +
                 "https://github.com/LumaTeam/Luma3DS/releases/tag/v7.0.5\n\n" +
                 "`?manualctrtransfer ?manualctrt ?mctrt`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:CTRTransfer/Manual\n\n" +
@@ -4247,6 +4345,10 @@ namespace InetBot.Modules
                 "https://3ds.hacks.guide/uninstall-cfw.html\n\n" +
                 "`?uninstall`\n" +
                 "https://wiki.hacks.guide/wiki/3DS:Uninstalling_software\n\n" +
+                "`?validrive ?fakesd`\n" +
+                "https://www.grc.com/validrive.htm\n\n" +
+                "`?wirelessstreaming ?wireless`\n" +
+                "wiki.hacks.guide/wiki/3DS:Wireless_streaming\n\n" +
                 "`?links`\n" +
                 "You're looking at it right now dummy.");
 
