@@ -5,13 +5,16 @@ using InetBot.Data;
 using InetBot.Data.Bootrom;
 using InetBot.Data.Pretendo;
 using Newtonsoft.Json;
+using System;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Net.NetworkInformation;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 using static InetBot.Data.PregeneratedRegex;
 using static InetBot.Data.User;
+using Color = Discord.Color;
 
 
 namespace InetBot.Modules
@@ -1013,6 +1016,12 @@ namespace InetBot.Modules
                         }
 
                         await HandleLFGCommand(game);
+                        break;
+                    case "furry":
+                        await HandleFurryCommand();
+                        break;
+                    case "gay":
+                        await HandleGayCommand();
                         break;
                     case "8ball":
                         await Handle8BallCommand();
@@ -4441,6 +4450,71 @@ namespace InetBot.Modules
                     await _userMessage.ReplyAsync(embed: embedBuilder.Build());
                 }
             }
+        }
+
+        private async Task HandleFurryCommand()
+        {
+            Random rnd = new Random();
+            int gayness = rnd.Next(100);
+
+            switch (_message.Author.Id)
+            {
+                case 651879661080674316:
+                    gayness = 2147483647;
+                    break;
+                case 786331727438151681:
+                    gayness = 100;
+                    break;
+                case 177732626424135680:
+                    gayness = 100;
+                    break;
+                case 715628573632757801:
+                    gayness = 100;
+                    break;
+                default:
+                    break;
+            }
+
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle($"The furry'o meter!")
+                .WithDescription($"{_message.Author.GlobalName} is {gayness}% furry.")
+                .WithColor(Color.LightOrange);
+
+            if (isSlashCommand) await RespondToSlashCommand(replyBuilder);
+            else await RespondToTextCommand(replyBuilder);
+        }
+
+        private async Task HandleGayCommand()
+        {
+            Random rnd = new Random();
+            int gayness = rnd.Next(100);
+
+            switch (_message.Author.Id)
+            {
+                case 651879661080674316:
+                    gayness = 100;
+                    break;
+                case 786331727438151681:
+                    gayness = 100;
+                    break;
+                case 177732626424135680:
+                    gayness = 50;
+                    break;
+                case 715628573632757801:
+                    gayness = 100;
+                    break;
+                default:
+                    break;
+            }
+
+            var replyBuilder = new EmbedBuilder()
+                .WithTitle($"The gay'o meter!")
+                .WithDescription($"{_message.Author.GlobalName} is {gayness}% gay.")
+                .WithColor(Color.LightOrange);
+
+            if (isSlashCommand) await RespondToSlashCommand(replyBuilder);
+            else await RespondToTextCommand(replyBuilder);
+
         }
 
         private async Task Handle8BallCommand()
